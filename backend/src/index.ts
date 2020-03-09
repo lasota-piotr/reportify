@@ -1,5 +1,3 @@
-import { start } from "./server";
-import { config } from "dotenv";
-
-config();
-start();
+require('dotenv').config({ debug: Boolean(process.env.DEBUG) })
+import { start } from './server'
+start()
