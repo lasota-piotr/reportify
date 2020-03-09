@@ -1,5 +1,5 @@
 import { ReportModel } from '../model/model'
-import { fetcher } from './fetcher'
+import { fetcherApi } from './fetcherApi'
 
 export const paths = {
   reports: '/api/report',
@@ -10,7 +10,7 @@ export const updateReport = async (
   params: Partial<ReportModel> & { _id: string }
 ): Promise<{ data: ReportModel }> => {
   const { _id, ...rest } = params
-  return fetcher(`${paths.report}/${params._id}`, {
+  return fetcherApi(`${paths.report}/${params._id}`, {
     headers: {
       'Content-Type': 'application/json'
     },

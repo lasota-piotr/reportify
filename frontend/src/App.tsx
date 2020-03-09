@@ -1,7 +1,7 @@
 import React from 'react'
 import { SWRConfig } from 'swr'
 import Reports from './components/Reports'
-import { fetcher } from './api/fetcher'
+import { fetcherApi } from './api/fetcherApi'
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <SWRConfig
         value={{
           refreshInterval: 60000,
-          fetcher
+          fetcher: fetcherApi
         }}
       >
         <Reports />
