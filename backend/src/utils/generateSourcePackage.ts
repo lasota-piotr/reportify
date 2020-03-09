@@ -2,6 +2,16 @@ import AdmZip from 'adm-zip'
 import fs from 'fs'
 import path from 'path'
 
+const ignoreFiles = [
+  '.env',
+  'node_modules',
+  'yarn',
+  'WEB_CONCURRENCY.sh',
+  'node',
+  'heroku-nodejs-plugin',
+  'configstore'
+]
+
 export const generateSourcePackage = async () => {
   const zip = new AdmZip()
 
@@ -9,7 +19,7 @@ export const generateSourcePackage = async () => {
 
   const files: string[] = fs.readdirSync(directoryPath)
   files.forEach(function(file) {
-    if (file === 'node_modules' || file === '.env') {
+    if (ignoreFiles.includes(file)) {
       return
     }
     const filePath = path.join(directoryPath, file)
