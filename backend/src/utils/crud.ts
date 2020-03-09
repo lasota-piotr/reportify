@@ -1,49 +1,52 @@
-import mongoose from "mongoose";
-import { RequestHandler } from "express";
+import mongoose from 'mongoose'
+import { RequestHandler } from 'express'
 
-type Model = mongoose.Model<mongoose.Document, {}>;
+type Model = mongoose.Model<mongoose.Document, {}>
 
 export const getOne = (model: Model): RequestHandler => async (req, res) => {
   try {
     const doc = await model
       .findOne({ _id: req.params.id })
       .lean()
-      .exec();
+      .exec()
 
     if (!doc) {
-      return res.status(400).end();
+      return res.status(400).end()
     }
 
-    res.status(200).json({ data: doc });
+    res.status(200).json({ data: doc })
   } catch (e) {
-    console.error(e);
-    res.status(400).end();
+    console.error(e)
+    res.status(400).end()
   }
-};
+}
 
 export const getMany = (model: Model): RequestHandler => async (req, res) => {
   try {
     const docs = await model
       .find({})
       .lean()
-      .exec();
+      .exec()
 
-    res.status(200).json({ data: docs });
+    res.status(200).json({ data: docs })
   } catch (e) {
-    console.error(e);
-    res.status(400).end();
+    console.error(e)
+    res.status(400).end()
   }
-};
+}
 
 export const createOne = (model: Model): RequestHandler => async (req, res) => {
   try {
-    const doc = await model.create({ ...req.body });
-    res.status(201).json({ data: doc });
+    const doc = await model.create(
+      { ...req.body },
+      { validateBeforeSave: true }
+    )
+    res.status(201).json({ data: doc })
   } catch (e) {
-    console.error(e);
-    res.status(400).end();
+    console.error(e)
+    res.status(400).send(e)
   }
-};
+}
 
 export const updateOne = (model: Model): RequestHandler => async (req, res) => {
   try {
@@ -53,38 +56,38 @@ export const updateOne = (model: Model): RequestHandler => async (req, res) => {
           _id: req.params.id
         },
         req.body,
-        { new: true }
+        { new: true, runValidators: true }
       )
       .lean()
-      .exec();
+      .exec()
 
     if (!updatedDoc) {
-      return res.status(400).end();
+      return res.status(400).end()
     }
 
-    res.status(200).json({ data: updatedDoc });
+    res.status(200).json({ data: updatedDoc })
   } catch (e) {
-    console.error(e);
-    res.status(400).end();
+    console.error(e)
+    res.status(400).send(e)
   }
-};
+}
 
 export const removeOne = (model: Model): RequestHandler => async (req, res) => {
   try {
     const removed = await model.findOneAndRemove({
       _id: req.params.id
-    });
+    })
 
     if (!removed) {
-      return res.status(400).end();
+      return res.status(400).end()
     }
 
-    return res.status(200).json({ data: removed });
+    return res.status(200).json({ data: removed })
   } catch (e) {
-    console.error(e);
-    res.status(400).end();
+    console.error(e)
+    res.status(400).end()
   }
-};
+}
 
 export const crudControllers = (model: Model) => ({
   removeOne: removeOne(model),
@@ -92,4 +95,4 @@ export const crudControllers = (model: Model) => ({
   getMany: getMany(model),
   getOne: getOne(model),
   createOne: createOne(model)
-});
+})

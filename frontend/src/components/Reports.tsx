@@ -1,10 +1,11 @@
 import React from 'react'
 import useSWR from 'swr'
 import { ReportsModel } from '../model/model'
+import * as api from '../api/api'
 import Report from './Report'
 
 const Reports = () => {
-  const { data, error } = useSWR<{ data: ReportsModel }>('/api/report')
+  const { data, error } = useSWR<{ data: ReportsModel }>(api.paths.reports)
   if (error) {
     return <div>error :(</div>
   }
@@ -15,7 +16,7 @@ const Reports = () => {
   return (
     <ul>
       {reports.map(report => (
-        <li>
+        <li key={report._id}>
           <Report report={report} />
         </li>
       ))}
