@@ -21,10 +21,11 @@ export const generateSourcePackage = async () => {
     .readdirSync(directoryPath)
     .filter(file => !ignoreFiles.includes(file))
   files.forEach(function(file) {
+    console.log({file})
     const filePath = path.join(directoryPath, file)
     const stat = fs.statSync(filePath)
     if (stat.isDirectory()) {
-      zip.addLocalFolder(file)
+      zip.addLocalFolder(file, file)
     } else {
       zip.addLocalFile(file)
     }
