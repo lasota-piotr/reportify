@@ -1,3 +1,11 @@
-require('dotenv').config({ debug: Boolean(process.env.DEBUG) })
+// prettier-ignore
+require('dotenv').config()
+import { generateSourcePackage } from './utils/generateSourcePackage'
 import { start } from './server'
-start()
+
+const execApp = async () => {
+  await generateSourcePackage()
+  await start()
+}
+
+execApp().catch(e => console.error(e))

@@ -20,6 +20,7 @@ app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
 app.use('/api/report', reportRouter)
+app.use(express.static('dist'))
 
 export const start = async () => {
   try {

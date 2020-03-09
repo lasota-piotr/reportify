@@ -14,6 +14,7 @@ function App() {
         }}
       >
         <Reset />
+        <a href={`${process.env.REACT_APP_API_URL}/source.zip`}>Details</a>
         <Reports />
       </SWRConfig>
     </div>
