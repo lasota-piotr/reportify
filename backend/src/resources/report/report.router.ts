@@ -9,6 +9,9 @@ router
   .get(controllers.getMany)
   .post(controllers.createOne)
 
+// /api/report/reset
+router.route('/reset').post(controllers.reset)
+
 // /api/report/:id
 router
   .route('/:id')

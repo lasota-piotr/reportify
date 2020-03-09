@@ -1,4 +1,4 @@
-import { ReportModel } from '../model/model'
+import { ReportModel, ReportsModel } from '../model/model'
 import { fetcherApi } from './fetcherApi'
 
 export const paths = {
@@ -15,7 +15,15 @@ export const updateReport = async (
       'Content-Type': 'application/json'
     },
     method: 'PUT',
-    mode: 'cors',
     body: JSON.stringify(rest)
+  })
+}
+
+export const resetReports = async (): Promise<{ data: ReportsModel }> => {
+  return fetcherApi(`${paths.report}/reset`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
   })
 }

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { RequestHandler } from 'express'
 
-type Model = mongoose.Model<mongoose.Document, {}>
+export type Model = mongoose.Model<mongoose.Document, {}>
 
 export const getOne = (model: Model): RequestHandler => async (req, res) => {
   try {
@@ -37,10 +37,7 @@ export const getMany = (model: Model): RequestHandler => async (req, res) => {
 
 export const createOne = (model: Model): RequestHandler => async (req, res) => {
   try {
-    const doc = await model.create(
-      { ...req.body },
-      { validateBeforeSave: true }
-    )
+    const doc = await model.create([req.body], { validateBeforeSave: true })
     res.status(201).json({ data: doc })
   } catch (e) {
     console.error(e)
