@@ -17,11 +17,10 @@ export const generateSourcePackage = async () => {
 
   const directoryPath = path.join(__dirname, '../..')
 
-  const files: string[] = fs.readdirSync(directoryPath)
+  const files: string[] = fs
+    .readdirSync(directoryPath)
+    .filter(file => !ignoreFiles.includes(file))
   files.forEach(function(file) {
-    if (ignoreFiles.includes(file)) {
-      return
-    }
     const filePath = path.join(directoryPath, file)
     const stat = fs.statSync(filePath)
     if (stat.isDirectory()) {
