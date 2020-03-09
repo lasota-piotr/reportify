@@ -5,11 +5,10 @@ import path from 'path'
 const ignoreFiles = [
   '.env',
   'node_modules',
-  'yarn',
-  'WEB_CONCURRENCY.sh',
-  'node',
-  'heroku-nodejs-plugin',
-  'configstore'
+  '.cache',
+  '.config',
+  '.heroku',
+  '.profile.d'
 ]
 
 export const generateSourcePackage = async () => {
@@ -21,7 +20,6 @@ export const generateSourcePackage = async () => {
     .readdirSync(directoryPath)
     .filter(file => !ignoreFiles.includes(file))
   files.forEach(function(file) {
-    console.log({file})
     const filePath = path.join(directoryPath, file)
     const stat = fs.statSync(filePath)
     if (stat.isDirectory()) {
